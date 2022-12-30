@@ -1,0 +1,41 @@
+table:
+  name: users
+  schema: public
+array_relationships:
+  - name: appointments
+    using:
+      manual_configuration:
+        column_mapping:
+          id: user_id
+        insertion_order: null
+        remote_table:
+          name: appointments
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      columns:
+        - sex
+        - age
+        - id
+        - email
+        - full_name
+        - password
+        - phone_number
+        - created_at
+        - updated_at
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - sex
+        - age
+        - id
+        - email
+        - full_name
+        - password
+        - phone_number
+        - created_at
+        - updated_at
+      filter: {}

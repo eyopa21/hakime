@@ -1,0 +1,4 @@
+- "!include public_appointments.yaml"
+- "!include public_doctors.yaml"
+- "!include public_user_test.yaml"
+- "!include public_users.yaml"

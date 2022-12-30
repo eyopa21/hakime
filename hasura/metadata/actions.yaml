@@ -1,6 +1,27 @@
-actions: []
+actions:
+  - name: doctorSignup
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:4000/doctorsignup
+  - name: login
+    definition:
+      kind: ""
+      handler: http://host.docker.internal:4000/login
+  - name: userSignUp
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:4000/usersignup
+  - name: verify
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:4000/verify
 custom_types:
-    enums: []
-    input_objects: []
-    objects: []
-    scalars: []
+  enums: []
+  input_objects: []
+  objects:
+    - name: userSignUpOutput
+    - name: InsertUsersOneDerivedOutput
+    - name: doctorSignupOutput
+    - name: verifyOutput
+    - name: loginOutput
+  scalars: []

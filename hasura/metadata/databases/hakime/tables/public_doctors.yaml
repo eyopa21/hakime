@@ -1,0 +1,13 @@
+table:
+  name: doctors
+  schema: public
+array_relationships:
+  - name: appointments
+    using:
+      manual_configuration:
+        column_mapping:
+          id: doctor_id
+        insertion_order: null
+        remote_table:
+          name: appointments
+          schema: public

@@ -1,0 +1,80 @@
+type Mutation {
+  doctorSignup(
+    bio: String!
+    current_hospital: String!
+    email: String!
+    experience: String!
+    full_name: String!
+    licence: String!
+    password: String!
+    phone_number: String!
+    profile_picture: String!
+    sex: bpchar!
+    user_name: String!
+    age: Int!
+  ): doctorSignupOutput
+}
+
+type Query {
+  login(
+    email: String!
+    password: String!
+  ): loginOutput
+}
+
+type Mutation {
+  userSignUp(
+    fullName: String!
+    sex: bpchar!
+    phoneNumber: String!
+    email: String!
+    password: String!
+    age: Int
+  ): userSignUpOutput
+}
+
+type Mutation {
+  verify(
+    id: Int!
+    code: String!
+  ): verifyOutput
+}
+
+type userSignUpOutput {
+  age: Int!
+  created_at: timestamptz!
+  email: String!
+  full_name: String!
+  id: Int!
+  password: String!
+  phone_number: String!
+  sex: bpchar!
+  updated_at: timestamptz!
+  token: String!
+}
+
+type InsertUsersOneDerivedOutput {
+  id: Int!
+}
+
+type doctorSignupOutput {
+  id: Int!
+  token: String!
+}
+
+type verifyOutput {
+  id: Int!
+  is_verified: Boolean
+}
+
+type loginOutput {
+  created_at: timestamptz!
+  email: String!
+  full_name: String!
+  id: Int!
+  phone_number: String!
+  sex: bpchar!
+  updated_at: timestamptz!
+  token: String!
+}
+
