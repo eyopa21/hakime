@@ -1,0 +1,676 @@
+{
+  "resource_version": 89,
+  "metadata": {
+    "version": 3,
+    "sources": [
+      {
+        "name": "default",
+        "kind": "postgres",
+        "tables": [
+          {
+            "table": {
+              "name": "appointments",
+              "schema": "public"
+            },
+            "object_relationships": [
+              {
+                "name": "doctor",
+                "using": {
+                  "foreign_key_constraint_on": "doctor_id"
+                }
+              },
+              {
+                "name": "patient",
+                "using": {
+                  "foreign_key_constraint_on": "patient_id"
+                }
+              },
+              {
+                "name": "user",
+                "using": {
+                  "foreign_key_constraint_on": "user_id"
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "bank_informations",
+              "schema": "public"
+            }
+          },
+          {
+            "table": {
+              "name": "banners",
+              "schema": "public"
+            },
+            "object_relationships": [
+              {
+                "name": "the_image",
+                "using": {
+                  "foreign_key_constraint_on": "image"
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "chaters",
+              "schema": "public"
+            },
+            "is_enum": true
+          },
+          {
+            "table": {
+              "name": "chats",
+              "schema": "public"
+            }
+          },
+          {
+            "table": {
+              "name": "doctors",
+              "schema": "public"
+            },
+            "object_relationships": [
+              {
+                "name": "image",
+                "using": {
+                  "foreign_key_constraint_on": "licence"
+                }
+              },
+              {
+                "name": "profile_image",
+                "using": {
+                  "foreign_key_constraint_on": "profile_picture"
+                }
+              },
+              {
+                "name": "speciallities",
+                "using": {
+                  "foreign_key_constraint_on": "speciallity"
+                }
+              }
+            ],
+            "array_relationships": [
+              {
+                "name": "appointments",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "doctor_id",
+                    "table": {
+                      "name": "appointments",
+                      "schema": "public"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "bank_informations",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "doctor_id",
+                    "table": {
+                      "name": "bank_informations",
+                      "schema": "public"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "experiences",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "doctor_id",
+                    "table": {
+                      "name": "experiences",
+                      "schema": "public"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "packages",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "doctor_id",
+                    "table": {
+                      "name": "packages",
+                      "schema": "public"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "reviews",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "doctor_id",
+                    "table": {
+                      "name": "reviews",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "experiences",
+              "schema": "public"
+            }
+          },
+          {
+            "table": {
+              "name": "images",
+              "schema": "public"
+            }
+          },
+          {
+            "table": {
+              "name": "notifications",
+              "schema": "public"
+            }
+          },
+          {
+            "table": {
+              "name": "packages",
+              "schema": "public"
+            }
+          },
+          {
+            "table": {
+              "name": "patients",
+              "schema": "public"
+            }
+          },
+          {
+            "table": {
+              "name": "reviews",
+              "schema": "public"
+            },
+            "object_relationships": [
+              {
+                "name": "user",
+                "using": {
+                  "foreign_key_constraint_on": "user_id"
+                }
+              }
+            ],
+            "event_triggers": [
+              {
+                "name": "calculate_rating",
+                "definition": {
+                  "enable_manual": false,
+                  "insert": {
+                    "columns": "*"
+                  }
+                },
+                "retry_conf": {
+                  "interval_sec": 10,
+                  "num_retries": 0,
+                  "timeout_sec": 60
+                },
+                "webhook": "https://hakime-main.glitch.me/calculaterating"
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "speciallities",
+              "schema": "public"
+            }
+          },
+          {
+            "table": {
+              "name": "users",
+              "schema": "public"
+            },
+            "array_relationships": [
+              {
+                "name": "appointments",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "user_id",
+                    "table": {
+                      "name": "appointments",
+                      "schema": "public"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "name": "withdrawals",
+              "schema": "public"
+            }
+          }
+        ],
+        "configuration": {
+          "connection_info": {
+            "database_url": {
+              "from_env": "PG_DATABASE_URL"
+            },
+            "isolation_level": "read-committed",
+            "use_prepared_statements": false
+          }
+        }
+      }
+    ],
+    "actions": [
+      {
+        "name": "doctorSignUp",
+        "definition": {
+          "handler": "https://hakime-main.glitch.me/doctorsignup",
+          "output_type": "doctorSignUpOutput",
+          "arguments": [
+            {
+              "name": "email",
+              "type": "String!"
+            },
+            {
+              "name": "full_name",
+              "type": "String!"
+            },
+            {
+              "name": "date_of_birth",
+              "type": "String!"
+            },
+            {
+              "name": "password",
+              "type": "String!"
+            },
+            {
+              "name": "phone_number",
+              "type": "String!"
+            },
+            {
+              "name": "sex",
+              "type": "String!"
+            },
+            {
+              "name": "profile_picture",
+              "type": "Int!"
+            },
+            {
+              "name": "speciallity",
+              "type": "Int!"
+            },
+            {
+              "name": "user_name",
+              "type": "String!"
+            },
+            {
+              "name": "current_hospital",
+              "type": "String!"
+            },
+            {
+              "name": "licence",
+              "type": "Int!"
+            },
+            {
+              "name": "experience_year",
+              "type": "Int!"
+            }
+          ],
+          "type": "mutation",
+          "kind": "synchronous"
+        }
+      },
+      {
+        "name": "forgotPassword",
+        "definition": {
+          "handler": "https://hakime-main.glitch.me/forgotpassword",
+          "output_type": "forgotPasswordOutput",
+          "arguments": [
+            {
+              "name": "arg1",
+              "type": "email!"
+            }
+          ],
+          "type": "mutation",
+          "kind": "synchronous"
+        }
+      },
+      {
+        "name": "login",
+        "definition": {
+          "handler": "https://hakime-main.glitch.me/login",
+          "output_type": "loginOutput",
+          "arguments": [
+            {
+              "name": "email",
+              "type": "String!"
+            },
+            {
+              "name": "password",
+              "type": "String!"
+            }
+          ],
+          "type": "mutation",
+          "kind": "synchronous"
+        }
+      },
+      {
+        "name": "pay",
+        "definition": {
+          "handler": "https://hakime-main.glitch.me/pay",
+          "output_type": "bill",
+          "arguments": [
+            {
+              "name": "email",
+              "type": "String!"
+            },
+            {
+              "name": "amount",
+              "type": "Int!"
+            },
+            {
+              "name": "doctor_id",
+              "type": "Int!"
+            },
+            {
+              "name": "user_id",
+              "type": "Int!"
+            },
+            {
+              "name": "first_name",
+              "type": "String!"
+            },
+            {
+              "name": "last_name",
+              "type": "String!"
+            }
+          ],
+          "type": "mutation",
+          "kind": "synchronous"
+        }
+      },
+      {
+        "name": "sendChat",
+        "definition": {
+          "handler": "https://hakime-main.glitch.me/sendmessage",
+          "output_type": "sendChatOutput",
+          "arguments": [
+            {
+              "name": "message",
+              "type": "String!"
+            },
+            {
+              "name": "doctor_id",
+              "type": "Int!"
+            },
+            {
+              "name": "user_id",
+              "type": "Int!"
+            },
+            {
+              "name": "from",
+              "type": "String!"
+            },
+            {
+              "name": "to",
+              "type": "String!"
+            }
+          ],
+          "type": "mutation",
+          "kind": "synchronous"
+        }
+      },
+      {
+        "name": "uploadImage",
+        "definition": {
+          "handler": "https://hakime-main.glitch.me/uploadimage",
+          "output_type": "uploadImageOutput",
+          "arguments": [
+            {
+              "name": "base64",
+              "type": "String!"
+            }
+          ],
+          "type": "mutation",
+          "kind": "synchronous"
+        }
+      },
+      {
+        "name": "userSignUp",
+        "definition": {
+          "handler": "https://hakime-main.glitch.me/usersignup",
+          "output_type": "userSignUpOutput",
+          "arguments": [
+            {
+              "name": "email",
+              "type": "String!"
+            },
+            {
+              "name": "full_name",
+              "type": "String!"
+            },
+            {
+              "name": "date_of_birth",
+              "type": "String!"
+            },
+            {
+              "name": "password",
+              "type": "String!"
+            },
+            {
+              "name": "phone_number",
+              "type": "String!"
+            },
+            {
+              "name": "sex",
+              "type": "String!"
+            }
+          ],
+          "type": "mutation",
+          "kind": "synchronous"
+        }
+      },
+      {
+        "name": "verify",
+        "definition": {
+          "handler": "https://hakime-main.glitch.me/verify",
+          "output_type": "verifyOutput",
+          "arguments": [
+            {
+              "name": "id",
+              "type": "Int!"
+            },
+            {
+              "name": "code",
+              "type": "String!"
+            }
+          ],
+          "type": "mutation",
+          "kind": "synchronous"
+        }
+      },
+      {
+        "name": "verifyPayment",
+        "definition": {
+          "handler": "https://hakime-main.glitch.me/verifypayment",
+          "output_type": "status",
+          "arguments": [
+            {
+              "name": "arg1",
+              "type": "ref_no!"
+            }
+          ],
+          "type": "mutation",
+          "kind": "synchronous"
+        }
+      }
+    ],
+    "custom_types": {
+      "input_objects": [
+        {
+          "name": "SampleInput",
+          "fields": [
+            {
+              "name": "username",
+              "type": "String!"
+            },
+            {
+              "name": "password",
+              "type": "String!"
+            }
+          ]
+        },
+        {
+          "name": "ref_no",
+          "fields": [
+            {
+              "name": "ref_no",
+              "type": "String!"
+            }
+          ]
+        },
+        {
+          "name": "email",
+          "fields": [
+            {
+              "name": "email",
+              "type": "String!"
+            }
+          ]
+        }
+      ],
+      "objects": [
+        {
+          "name": "userSignUpOutput",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Int!"
+            },
+            {
+              "name": "token",
+              "type": "String!"
+            }
+          ]
+        },
+        {
+          "name": "doctorSignUpOutput",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Int!"
+            },
+            {
+              "name": "token",
+              "type": "String!"
+            }
+          ]
+        },
+        {
+          "name": "loginOutput",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Int!"
+            },
+            {
+              "name": "token",
+              "type": "String!"
+            },
+            {
+              "name": "user_name",
+              "type": "String"
+            }
+          ]
+        },
+        {
+          "name": "verifyOutput",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Int!"
+            },
+            {
+              "name": "is_verified",
+              "type": "Boolean"
+            }
+          ]
+        },
+        {
+          "name": "SampleOutput",
+          "fields": [
+            {
+              "name": "accessToken",
+              "type": "String!"
+            }
+          ]
+        },
+        {
+          "name": "bill",
+          "fields": [
+            {
+              "name": "redirect_url",
+              "type": "String!"
+            },
+            {
+              "name": "ref_no",
+              "type": "String!"
+            }
+          ]
+        },
+        {
+          "name": "uploadImageOutput",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Int!"
+            },
+            {
+              "name": "url",
+              "type": "String!"
+            }
+          ]
+        },
+        {
+          "name": "status",
+          "fields": [
+            {
+              "name": "status",
+              "type": "String!"
+            }
+          ]
+        },
+        {
+          "name": "sendChatOutput",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Int!"
+            }
+          ]
+        },
+        {
+          "name": "forgotPasswordOutput",
+          "fields": [
+            {
+              "name": "id",
+              "type": "Int!"
+            }
+          ]
+        }
+      ]
+    },
+    "backend_configs": {
+      "dataconnector": {
+        "athena": {
+          "uri": "http://localhost:8081/api/v1/athena"
+        },
+        "mysql8": {
+          "uri": "http://localhost:8081/api/v1/mysql"
+        },
+        "snowflake": {
+          "uri": "http://localhost:8081/api/v1/snowflake"
+        }
+      }
+    }
+  }
+}

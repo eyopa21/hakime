@@ -17,31 +17,25 @@ export default defineNuxtPlugin((nuxtApp) => {
     const auth0Audience = "example-blog"
 
     const authLink = setContext((_, { headers }) => {
-        /*
-        if (process.client) {
-            const token = localStorage.getItem('token')
-        
-
-            if (token) {
 
 
-                return {
-                    headers: {
-                        ...headers,
-                        //"x-hasura-admin-secret": 'vQ28vOPti6QW71sJSTzsPai6uzEmPv7mYolvxYB7bPzQHNzycbsrZN3IfxtfUOGV',
-                        Authorization: token ? `Bearer ${token}` : "",
-                        // Authorization: "token",
-                    },
-                };
-            }
 
 
-        }
+        return {
+            headers: {
+                ...headers,
+                "x-hasura-admin-secret": 'hakime',
+                //Authorization: token ? `Bearer ${token}` : "",
+                // Authorization: "token",
+            },
+        };
 
-*/
+
+
+
     });
     const httpLink = createHttpLink({
-        uri: "http://localhost:8080/v1/graphql",
+        uri: "https://hakime.hasura.app/v1/graphql",
     });
 
     const apolloClient = new ApolloClient({
